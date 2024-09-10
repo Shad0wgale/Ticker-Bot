@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 import requests
+import asyncio
+from stock_graph import GraphPlotInfo
 
 load_dotenv()
 
@@ -18,40 +20,36 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 
-# Command to get currency exchange rates from poe.ninja. !currencysoftcore
-@bot.command()
-async def currencysoftcore(ctx):
-    url = 'https://poe.ninja/api/data/currencyoverview?league=Necropolis&type=Currency'    
-    # Extract relevant data from the response
-    response = requests.get('https://poe.ninja/api/data/currencyoverview?league=Ancestor&type=Currency')
-    dict = response.json()
-    currencies = dict['lines']
-    
-    data = [0] * len(currencies)
-    for x in range(len(currencies)):
-        data[x] = (currencies[x])
-    
-    
-    #ASK FOR WHICH CURRENCY
-    await ctx.send("Please enter a currency, ex: Awakener's Orb")
-    
+@bot.command(name='stock')
+async def stock(ctx):
+    await ctx.send("Please enter the stock ticker symbol (e.g., AAPL, TSLA):")
+
+    # Define a check to ensure the bot listens for the next message from the same user
     def check(message):
         return message.author == ctx.author and message.channel == ctx.channel
+
+    # Wait for the user to respond with the ticker symbol
     try:
-        msg = await bot.wait_for('message', timeout=30, check=check)  # Wait for user's response for 30 seconds
-        input_string = msg.content
+        msg = await bot.wait_for('message', check=check, timeout=30)  # Timeout of 30 seconds
     except asyncio.TimeoutError:
-        await ctx.send("You took too long to respond.")
-    
-    for item in data:
-        if 'currencyTypeName' in item and item['currencyTypeName'] in input_string:
-            await ctx.send(item['currencyTypeName'] +" is currently "+ str(item['chaosEquivalent'])+" chaos")
-    
-    
+        await ctx.send("You took too long to respond! Please try again.")
+        return
 
-    # Format the data into a readable message
-    
-    #await ctx.send("Currency exchange rates:\n" + "insert info here")
+    ticker = msg.content.upper()  # Get the ticker and convert it to uppercase
 
-# Run the bot
+    # Inform the user that the bot is generating the graph
+    await ctx.send(f"Generating graph for {ticker}...")
+
+    # Use the GraphPlotInfo function to generate the graph
+    image_path = f"{ticker}_plot.png"
+    GraphPlotInfo(ticker, image_path)  # Call the graph function
+
+    # Send the generated image to the Discord channel
+    if os.path.exists(image_path):
+        await ctx.send(file=discord.File(image_path))
+        os.remove(image_path)  # Clean up and remove the file after sending it
+    else:
+        await ctx.send(f"Failed to generate the graph for {ticker}. Please try again.")
+
+# Run the bot with the token
 bot.run(DISCORD_TOKEN)
