@@ -1,6 +1,30 @@
-# A Discord to help make informed stock decisions!
+# Discord Stock Graph Bot
 
-Use !stock command to be prompted for a ticker such as AAPL or TSLA.
+This Discord bot allows you to generate and share stock price graphs directly in your Discord channel. Simply use the `!stock` command to request a graph for any stock ticker symbol, and the bot will generate and send the graph back to the channel.
+![image](https://github.com/user-attachments/assets/4ceb99ae-77da-4769-8ec4-9875fda4c93e)
 
-The bot will automatically graph the 1 year history, marking low points and high points in the stock trend.
-![image](https://github.com/user-attachments/assets/827f26c6-cbf4-4444-8e10-8d221e3d54e4)
+## Features
+
+- **Interactive Commands**: Request stock graphs using the `!stock` command.
+- **Graph Generation**: Automatically generates graphs for stock price data.
+- **Dynamic Responses**: The bot responds with the graph and handles user input.
+
+## Requirements
+
+- **Python 3.8+**
+- **`discord.py`**: For interacting with the Discord API.
+- **`yfinance`**: For fetching stock data.
+- **`pandas`**: For data manipulation.
+- **`matplotlib`**: For plotting graphs.
+- **`seaborn`**: For enhancing graph visuals.
+- **`python-dotenv`**: For managing environment variables.
+
+## Setup
+
+### 1. Clone the Repository
+
+Clone this repository to your local machine:
+
+```bash
+git clone https://github.com/yourusername/discord-stock-graph-bot.git
+cd discord-stock-graph-bot
