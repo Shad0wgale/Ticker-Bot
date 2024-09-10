@@ -43,7 +43,8 @@ DISCORD_TOKEN=your_discord_bot_token_here
 ```
 
 ### 4. Add Bot Token
-
+Make sure to replace your_discord_bot_token_here in the .env file with the token you received from the Discord Developer Portal.
+https://discord.com/developers/applications
 ### 5. Run the Bot
 
 ```bash
