@@ -30,22 +30,22 @@ git clone https://github.com/yourusername/discord-stock-graph-bot.git
 cd discord-stock-graph-bot
 ```
 
-### 2. Clone the Repository
+### 2. Install Dependencies
 
 ```bash
 pip install discord.py yfinance pandas matplotlib seaborn python-dotenv
 ```
 
-### 3. Clone the Repository
-
+### 3. Prepare Bot token in 
+Make sure to replace your_discord_bot_token_here in the .env file with the token you received from the Discord Developer Portal.
 ```bash
 DISCORD_TOKEN=your_discord_bot_token_here
 ```
 
-### 4. Add Bot Token
-Make sure to replace your_discord_bot_token_here in the .env file with the token you received from the Discord Developer Portal.
 https://discord.com/developers/applications
 ### 5. Run the Bot
+Make sure to replace your_discord_bot_token_here in the .env file with the token you received from the Discord Developer Portal.
+
 
 ```bash
 python bot.py
